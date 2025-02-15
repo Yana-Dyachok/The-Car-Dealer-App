@@ -2,6 +2,7 @@
 import { useEffect, useState, Suspense, lazy } from 'react';
 import fetchData from '@/utils/fetch-data';
 import { IVehicleData } from '@/types/interfaces';
+import { getIdSelectedCar } from '@/utils/get-id-selected-car';
 import SelectModelYear from '../select-model-year/select-model-year';
 import Button from '../ui/button';
 const SelectVehicleMake = lazy(
@@ -45,7 +46,7 @@ const FilterPage = () => {
       />
 
       <Button
-        to={`/result/${selectedMake}/${selectedYear}`}
+        to={`/result/${getIdSelectedCar(selectedMake, makes)}/${selectedYear}`}
         disabled={!selectedMake || !selectedYear}
       >
         Next
