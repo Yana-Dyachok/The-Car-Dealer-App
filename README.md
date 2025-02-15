@@ -41,6 +41,9 @@ Husky                     |setting up Git hooks:                   |npm run prep
 Next                      | compiles files and builds the app:     | npm run build 
 //                        | create a local server for development: | npm run dev 
 Prettier                  | checks and formats files:              | npm run format
+
+
+
 ![Без імені](https://github.com/user-attachments/assets/22169fec-a0f0-4a45-bdf5-a65091fc0385)
 ![o](https://github.com/user-attachments/assets/c468bde0-c4bf-4ede-9d2d-2150b83566e6)
 
