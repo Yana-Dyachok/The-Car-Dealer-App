@@ -30,7 +30,7 @@ const FilterPage = () => {
   return (
     <div className="flex flex-col gap-4 items-center justify-center min-h-screen">
       <h1 className="text-2xl font-bold text-center">
-        Select vehicle make and model's year
+        Select vehicle make and model&apos;s year
       </h1>
       <Suspense fallback={<div>Loading...</div>}>
         <SelectVehicleMake
