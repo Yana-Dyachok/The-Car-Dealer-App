@@ -2,16 +2,16 @@
 import { useEffect, useState, Suspense, lazy } from 'react';
 import fetchData from '@/utils/fetch-data';
 import { IVehicleData } from '@/types/interfaces';
-const Button = lazy(() => import('../ui/button'));
+import SelectModelYear from '../select-model-year/select-model-year';
+import Button from '../ui/button';
+const SelectVehicleMake = lazy(
+  () => import('../select-vehicle-make/select-vehicle-make'),
+);
 
 const FilterPage = () => {
   const [makes, setMakes] = useState<IVehicleData[]>([]);
   const [selectedMake, setSelectedMake] = useState<string>('');
   const [selectedYear, setSelectedYear] = useState<string>('');
-  const years = Array.from(
-    { length: new Date().getFullYear() - 2014 },
-    (_, i) => (2015 + i).toString(),
-  );
 
   useEffect(() => {
     const fetchCars = async () => {
@@ -28,47 +28,28 @@ const FilterPage = () => {
   }, []);
 
   return (
-    <div className="flex flex-col gap-4">
-      <label>
-        Select Vehicle Make:
-        <select
-          className="border p-2"
-          value={selectedMake}
-          onChange={(e) => setSelectedMake(e.target.value)}
-        >
-          <option value="">Select Make</option>
-          {makes.map((make) => (
-            <option key={make.MakeId} value={make.MakeName}>
-              {make.MakeName}
-            </option>
-          ))}
-        </select>
-      </label>
-
-      <label>
-        Select Model Year:
-        <select
-          className="border p-2"
-          value={selectedYear}
-          onChange={(e) => setSelectedYear(e.target.value)}
-        >
-          <option value="">Select Year</option>
-          {years.map((year) => (
-            <option key={year} value={year}>
-              {year}
-            </option>
-          ))}
-        </select>
-      </label>
-
-      <Suspense fallback={<div>Loading Button...</div>}>
-        <Button
-          to={`/result/${selectedMake}/${selectedYear}`}
-          disabled={!selectedMake || !selectedYear}
-        >
-          Next
-        </Button>
+    <div className="flex flex-col gap-4 items-center justify-center min-h-screen">
+      <h1 className="text-2xl font-bold text-center">
+        Select vehicle make and model's year
+      </h1>
+      <Suspense fallback={<div>Loading...</div>}>
+        <SelectVehicleMake
+          makes={makes}
+          selectedMake={selectedMake}
+          setSelectedMake={setSelectedMake}
+        />
       </Suspense>
+      <SelectModelYear
+        selectedYear={selectedYear}
+        setSelectedYear={setSelectedYear}
+      />
+
+      <Button
+        to={`/result/${selectedMake}/${selectedYear}`}
+        disabled={!selectedMake || !selectedYear}
+      >
+        Next
+      </Button>
     </div>
   );
 };
