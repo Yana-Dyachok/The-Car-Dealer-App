@@ -1,4 +1,4 @@
-import { IVehicleResponse } from '@/types/interfaces';
+import { IVehicleModelResponse } from '@/types/interfaces';
 
 const fetchDataByIDYear = async ({
   makeId,
@@ -6,19 +6,19 @@ const fetchDataByIDYear = async ({
 }: {
   makeId: string;
   year: string;
-}): Promise<IVehicleResponse | undefined> => {
+}): Promise<IVehicleModelResponse | undefined> => {
   try {
     const response = await fetch(
       `https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMakeIdYear/makeId/${makeId}/modelyear/${year}?format=json`,
     );
+
     if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
+      throw new Error(`Failed to fetch data: ${response.statusText}`);
     }
-    const data: IVehicleResponse = await response.json();
+    const data = await response.json();
     return data;
   } catch (error) {
     console.error('Error fetching data:', error);
-    return undefined;
   }
 };
 

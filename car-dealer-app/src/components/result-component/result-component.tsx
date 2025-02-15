@@ -1,44 +1,56 @@
 'use client';
-import { useEffect, useState } from 'react';
-import fetchDataByIDYear from '@/utils/fetch-data-by-id-year';
-import { IVehicleData } from '@/types/interfaces';
 
-const ResultComponent: React.FC<{ makeId: string; year: string }> = ({
+import { useEffect, useState, lazy, Suspense } from 'react';
+import fetchDataByIDYear from '@/utils/fetch-data-by-id-year';
+import { IVehicleModelResponse } from '@/types/interfaces';
+
+const RenderCars = lazy(() => import('../render-cars/render-cars'));
+
+const VehicleModels: React.FC<{ makeId: string; year: string }> = ({
   makeId,
   year,
 }) => {
-  const [makes, setMakes] = useState<IVehicleData[]>([]);
+  const [data, setData] = useState<IVehicleModelResponse | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    const fetchCars = async () => {
+    const fetchModels = async () => {
+      setLoading(true);
+      setError(null);
       try {
-        const data = await fetchDataByIDYear({ makeId, year });
-        if (data) {
-          setMakes(data.Results || []);
+        const response = await fetchDataByIDYear({ makeId, year });
+        if (response?.Results.length) {
+          setData(response);
+        } else {
+          setData(null);
         }
-      } catch (error) {
-        console.error('Error fetching vehicle makes:', error);
+      } catch (err) {
+        setError(`Failed to fetch vehicle models, ${err}`);
+      } finally {
+        setLoading(false);
       }
     };
-    fetchCars();
+
+    fetchModels();
   }, [makeId, year]);
 
   return (
-    <div>
-      <h1>
-        Models for {makeId} - {year}
+    <div className="flex flex-col gap-4 items-center justify-center min-h-screen">
+      <h1 className="text-2xl font-bold text-white mb-4">
+        Vehicle Models for {year}
       </h1>
-      {makes.length > 0 ? (
-        <ul>
-          {makes.map((make, index) => (
-            <li key={index}>{make.MakeName}</li>
-          ))}
-        </ul>
-      ) : (
-        <p>No models found.</p>
-      )}
+      <Suspense fallback={<p>Loading models...</p>}>
+        {error && <p className="text-red-500">{error}</p>}
+
+        {!loading && !error && data ? (
+          <RenderCars makes={data.Results} />
+        ) : (
+          !loading && <p className="text-gray-500">No models found.</p>
+        )}
+      </Suspense>
     </div>
   );
 };
 
-export default ResultComponent;
+export default VehicleModels;
