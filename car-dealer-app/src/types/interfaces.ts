@@ -5,10 +5,13 @@ export interface IVehicleData {
   VehicleTypeName: string;
 }
 
-export interface IVehicleResponse {
+export interface IVehicleGeneralResponse {
   Count: number;
   Message: string;
   SearchCriteria: string;
+}
+
+export interface IVehicleResponse extends IVehicleGeneralResponse {
   Results: IVehicleData[];
 }
 
@@ -19,9 +22,6 @@ export interface IVehicleModel {
   Model_Name: string;
 }
 
-export interface IVehicleModelResponse {
-  Count: number;
-  Message: string;
-  SearchCriteria: string;
+export interface IVehicleModelResponse extends IVehicleGeneralResponse {
   Results: IVehicleModel[];
 }
