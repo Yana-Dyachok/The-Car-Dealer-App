@@ -3,6 +3,7 @@
 import { useEffect, useState, lazy, Suspense } from 'react';
 import fetchDataByIDYear from '@/utils/fetch-data-by-id-year';
 import { IVehicleModelResponse } from '@/types/interfaces';
+import Loader from '../ui/loader/loader';
 
 const RenderCars = lazy(() => import('../render-cars/render-cars'));
 
@@ -37,10 +38,10 @@ const VehicleModels: React.FC<{ makeId: string; year: string }> = ({
 
   return (
     <div className="flex flex-col gap-4 items-center justify-center min-h-screen">
-      <h1 className="text-2xl font-bold text-white mb-4">
+      <h1 className="text-2xl font-bold  text-white text-center">
         Vehicle Models for {year}
       </h1>
-      <Suspense fallback={<p>Loading models...</p>}>
+      <Suspense fallback={<Loader />}>
         {error && <p className="text-red-500">{error}</p>}
 
         {!loading && !error && data ? (

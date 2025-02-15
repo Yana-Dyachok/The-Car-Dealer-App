@@ -4,6 +4,7 @@ import fetchData from '@/utils/fetch-data';
 import { IVehicleData } from '@/types/interfaces';
 import { getIdSelectedCar } from '@/utils/get-id-selected-car';
 import SelectModelYear from '../select-model-year/select-model-year';
+import Loader from '../ui/loader/loader';
 import Button from '../ui/button';
 
 const SelectVehicleMake = lazy(
@@ -34,7 +35,7 @@ const FilterPage = () => {
       <h1 className="text-2xl font-bold text-center">
         Select vehicle make and model&apos;s year
       </h1>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<Loader />}>
         <SelectVehicleMake
           makes={makes}
           selectedMake={selectedMake}
