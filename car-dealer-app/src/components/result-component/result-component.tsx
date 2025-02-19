@@ -1,39 +1,14 @@
 'use client';
-
-import { useEffect, useState, Suspense } from 'react';
-import fetchDataByIDYear from '@/utils/fetch-data-by-id-year';
-import { IVehicleModelResponse } from '@/types/interfaces';
+import { Suspense } from 'react';
 import Loader from '../ui/loader/loader';
 import RenderCars from '../render-cars/render-cars';
+import useFetchModels from '@/hook/use-fetch-models';
 
 const VehicleModels: React.FC<{ makeId: string; year: string }> = ({
   makeId,
   year,
 }) => {
-  const [data, setData] = useState<IVehicleModelResponse | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-
-  useEffect(() => {
-    const fetchModels = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const response = await fetchDataByIDYear({ makeId, year });
-        if (response?.Results.length) {
-          setData(response);
-        } else {
-          setData(null);
-        }
-      } catch (err) {
-        setError(`Failed to fetch vehicle models, ${err}`);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchModels();
-  }, [makeId, year]);
+  const { data, error, loading } = useFetchModels(makeId, year);
 
   return (
     <div className="flex flex-col gap-4 items-center justify-center min-h-screen">
