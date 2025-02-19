@@ -1,11 +1,10 @@
 'use client';
 
-import { useEffect, useState, lazy, Suspense } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import fetchDataByIDYear from '@/utils/fetch-data-by-id-year';
 import { IVehicleModelResponse } from '@/types/interfaces';
 import Loader from '../ui/loader/loader';
-
-const RenderCars = lazy(() => import('../render-cars/render-cars'));
+import RenderCars from '../render-cars/render-cars';
 
 const VehicleModels: React.FC<{ makeId: string; year: string }> = ({
   makeId,
