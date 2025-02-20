@@ -1,34 +1,27 @@
 'use client';
-import { useEffect, useState, Suspense, lazy } from 'react';
+import { useState, Suspense, use } from 'react';
 import fetchData from '@/utils/fetch-data';
 import { IVehicleData } from '@/types/interfaces';
 import { getIdSelectedCar } from '@/utils/get-id-selected-car';
 import SelectModelYear from '../select-model-year/select-model-year';
 import Loader from '../ui/loader/loader';
 import Button from '../ui/button';
+import SelectVehicleMake from '../select-vehicle-make/select-vehicle-make';
 
-const SelectVehicleMake = lazy(
-  () => import('../select-vehicle-make/select-vehicle-make'),
-);
+const fetchCars = (async () => {
+  try {
+    const data = await fetchData();
+    return data ? data.Results : [];
+  } catch (error) {
+    console.error('Error fetching vehicle makes:', error);
+    return [];
+  }
+})();
 
 const FilterPage = () => {
-  const [makes, setMakes] = useState<IVehicleData[]>([]);
   const [selectedMake, setSelectedMake] = useState<string>('');
   const [selectedYear, setSelectedYear] = useState<string>('');
-
-  useEffect(() => {
-    const fetchCars = async () => {
-      try {
-        const data = await fetchData();
-        if (data) {
-          setMakes(data.Results || []);
-        }
-      } catch (error) {
-        console.error('Error fetching vehicle makes:', error);
-      }
-    };
-    fetchCars();
-  }, []);
+  const makes: IVehicleData[] = use(fetchCars);
 
   return (
     <div className="flex flex-col gap-4 items-center justify-center min-h-screen">
