@@ -1,4 +1,5 @@
 import { IVehicleModelResponse } from '@/types/interfaces';
+import { GET_MODELS_URL } from '../../next.config';
 
 const fetchDataByIDYear = async ({
   makeId,
@@ -8,9 +9,7 @@ const fetchDataByIDYear = async ({
   year: string;
 }): Promise<IVehicleModelResponse | undefined> => {
   try {
-    const response = await fetch(
-      `https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMakeIdYear/makeId/${makeId}/modelyear/${year}?format=json`,
-    );
+    const response = await fetch(GET_MODELS_URL(makeId, year));
 
     if (!response.ok) {
       throw new Error(`Failed to fetch data: ${response.statusText}`);

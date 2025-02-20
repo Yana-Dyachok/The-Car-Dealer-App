@@ -6,9 +6,9 @@ interface RenderCarsProps {
 const RenderCars: React.FC<RenderCarsProps> = ({ makes }) => {
   return (
     <ul className="space-y-2">
-      {makes.map((model) => (
+      {makes.map((model, i) => (
         <li
-          key={model.Model_ID}
+          key={`${model.Model_ID}-${i}`}
           className="p-3 bg-gray-100 rounded-lg shadow-sm"
         >
           🚗 {model.Make_Name} - {model.Model_Name}
