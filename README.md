@@ -1,5 +1,7 @@
 ### Front-end JS engineer test assessment - the Car Dealer App
-## How to install
+###  [Task](https://develops.notion.site/Front-end-JS-engineer-test-assessment-the-Car-Dealer-App-5b87f1603ac54112bacfdc625a85a87b)
+### [Deploy](https://the-car-dealer-r01msxqqi-yana-dyachoks-projects.vercel.app/)
+### How to install
 
 1.  Clone this repository
 ```
@@ -9,14 +11,15 @@ git clone https://github.com/Yana-Dyachok/The-Car-Dealer-App.git
 ```
 cd The-Car-Dealer-App 
 ```
-3.  Switch the branch to `develop`
-```
-git checkout develop
-```
-4.  Move to the directory
+3.  Move to the directory
 ```
 cd car-dealer-app
 ```
+4. Installing NPM modules
+```
+npm i
+```
+
 5.  Running application
 ```
 npm run dev
