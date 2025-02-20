@@ -17,7 +17,7 @@ const SelectModelYear: React.FC<SelectYearProps> = ({
         value={selectedYear}
         onChange={(e) => setSelectedYear(e.target.value)}
       >
-        <option value="">Select Make</option>
+        <option value="">Select Year</option>
         {modelYears.map((year) => (
           <option key={year} value={year}>
             {year}
